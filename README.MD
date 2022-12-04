@@ -1,5 +1,5 @@
-# AOC-2022
-solution of Advent Of code 2022 in golang
+# [AOC-2022][1]
+solution of [Advent Of code 2022][1] in [golang](go.dev)
 
 I don't know golang, this is for learning it, so don't get mad.
 
@@ -23,3 +23,4 @@ or:
  $ go run . -day=1 -part=1
 ```
 
+[1]: https://adventofcode.com/2022
