@@ -15,12 +15,12 @@ to run it, specify the day and part
 and `-test` if you want to run the testcase
 
 to run day 1 part 1 do:
-```bash
+```console
  $ go build
  $ ./AOC-2022 -day=1 -part=1
 ```
 or:
-```bash
+```console
  $ go run . -day=1 -part=1
 ```
 
