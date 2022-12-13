@@ -15,7 +15,7 @@ func priority(item int) int {
 }
 
 func priorityOfDuplicate(line string) int {
-	compartement1 := NewSet()
+	compartement1 := NewSet[int]()
 
 	for _, item := range line[:len(line) / 2] {
 		compartement1.Add(int(item))
@@ -33,13 +33,13 @@ func priorityOfDuplicate(line string) int {
 }
 
 func duplicatesInGroup(rucksacks [3]string) int {
-	rucksack1Contents := NewSet()
+	rucksack1Contents := NewSet[int]()
 
 	for _, item := range rucksacks[0] {
 		rucksack1Contents.Add(int(item))
 	}
 
-	rucksacks1And2Duplicates := NewSet()
+	rucksacks1And2Duplicates := NewSet[int]()
 
 	for _, itemRune := range rucksacks[1] {
 		item := int(itemRune)

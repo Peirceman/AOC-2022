@@ -8,10 +8,6 @@ import (
 	"strconv"
 )
 
-func max(a, b int) int {
-	return int(math.Max(float64(a), float64(b)))
-}
-
 // insert val into sorted slice
 func insert(slice []int, toInsert int) []int {
 	result := make([]int, 0, len(slice) + 1)
