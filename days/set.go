@@ -34,3 +34,13 @@ func (this *set[T]) Contains(toCheck T) bool {
 func (this *set[T]) Length() int {
 	return len(this.m)
 }
+
+func (this *set[T]) ToSlice() []T {
+	result := make([]T, 0, len(this.m))
+
+	for k, _ := range this.m {
+		result = append(result, k)
+	}
+
+	return result
+}
