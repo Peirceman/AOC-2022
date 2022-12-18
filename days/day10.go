@@ -6,16 +6,17 @@ import (
 	"os"
 	"strconv"
 )
+
 func (d *Day) Day10Part2(filePath string) {
 	file, _ := os.Open(filePath)
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
 
-	screen := [6*40]bool{}
+	screen := [6 * 40]bool{}
 	CRT_Pos := 0
 	X := 1
 	for scanner.Scan() {
-		if X - 1 <= CRT_Pos % 40 && CRT_Pos % 40  <= X + 1 {
+		if X-1 <= CRT_Pos%40 && CRT_Pos%40 <= X+1 {
 			screen[CRT_Pos] = true
 		}
 
@@ -24,24 +25,24 @@ func (d *Day) Day10Part2(filePath string) {
 			continue
 		}
 
-		if X - 1 <= CRT_Pos % 40 && CRT_Pos % 40 <= X + 1 {
+		if X-1 <= CRT_Pos%40 && CRT_Pos%40 <= X+1 {
 			screen[CRT_Pos] = true
 		}
 
 		CRT_Pos++
 		numToAdd, _ := strconv.Atoi(scanner.Text()[5:])
 		X += numToAdd
-		if X - 1 <= CRT_Pos % 40 && CRT_Pos % 40 <= X + 1 {
+		if X-1 <= CRT_Pos%40 && CRT_Pos%40 <= X+1 {
 			screen[CRT_Pos] = true
 		}
 	}
 
-	if X - 1 <= CRT_Pos % 40 && CRT_Pos % 40 <= X + 1 {
+	if X-1 <= CRT_Pos%40 && CRT_Pos%40 <= X+1 {
 		screen[CRT_Pos] = true
 	}
 
 	for i := 0; i < 6; i++ {
-		currentLine := screen[40*i:40*(i+1)]
+		currentLine := screen[40*i : 40*(i+1)]
 		for _, pixel := range currentLine {
 			if pixel {
 				fmt.Print("#")
@@ -63,7 +64,7 @@ func (d *Day) Day10Part1(filePath string) {
 	cycle := 1
 	X := 1
 	for i := 0; scanner.Scan(); i++ {
-		if cycle - 20 == checkedCyclesCount * 40 {
+		if cycle-20 == checkedCyclesCount*40 {
 			sumOfSignalStrengths += X * cycle
 			checkedCyclesCount++
 		}
@@ -73,7 +74,7 @@ func (d *Day) Day10Part1(filePath string) {
 			continue
 		}
 
-		if cycle - 20 == checkedCyclesCount * 40 {
+		if cycle-20 == checkedCyclesCount*40 {
 			sumOfSignalStrengths += X * cycle
 			checkedCyclesCount++
 		}
@@ -81,13 +82,13 @@ func (d *Day) Day10Part1(filePath string) {
 		cycle++
 		numToAdd, _ := strconv.Atoi(scanner.Text()[5:])
 		X += numToAdd
-		if cycle - 20 == checkedCyclesCount * 40 {
+		if cycle-20 == checkedCyclesCount*40 {
 			sumOfSignalStrengths += X * cycle
 			checkedCyclesCount++
 		}
 	}
 
-	if cycle - 20 == checkedCyclesCount * 40 {
+	if cycle-20 == checkedCyclesCount*40 {
 		sumOfSignalStrengths += X * cycle
 		checkedCyclesCount++
 	}

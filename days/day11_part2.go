@@ -113,10 +113,8 @@ func (this *monkey_part2) postReadInit(monkeys []*monkey_part2) {
 }
 
 func (d *Day) Day11Part2(filePath string) {
+	monkeys := make([]*monkey_part2, (getFileLength(filePath) + 1) / 7)
 	file, _ := os.Open(filePath)
-	monkeys := make([]*monkey_part2, (lineCounter(file) + 1) / 7)
-	file.Close()
-	file, _ = os.Open(filePath)
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
 

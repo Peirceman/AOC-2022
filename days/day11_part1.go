@@ -2,8 +2,6 @@ package days
 
 import (
 	"bufio"
-	"bytes"
-	"io"
 	"fmt"
 	"os"
 	"strconv"
@@ -93,31 +91,9 @@ func parseMonkeyPart1(scanner *bufio.Scanner) *monkey_part1 {
 	return result
 }
 
-func lineCounter(r io.Reader) int {
-	buf := make([]byte, 32*1024)
-	count := 0
-	lineSep := []byte{'\n'}
-
-	for {
-		c, err := r.Read(buf)
-		count += bytes.Count(buf[:c], lineSep)
-
-		switch {
-		case err == io.EOF:
-			return count
-
-		case err != nil:
-			os.Exit(1)
-			return count
-		}
-	}
-}
-
 func (d *Day) Day11Part1(filePath string) {
+	monkeys := make([]*monkey_part1, (getFileLength(filePath) + 1) / 7)
 	file, _ := os.Open(filePath)
-	monkeys := make([]*monkey_part1, (lineCounter(file) + 1) / 7)
-	file.Close()
-	file, _ = os.Open(filePath)
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
 

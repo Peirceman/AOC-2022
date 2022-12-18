@@ -1,7 +1,10 @@
 package days
 
 import (
+	"bytes"
+	"io"
 	"math"
+	"os"
 	"strconv"
 	"reflect"
 )
@@ -24,6 +27,28 @@ func min(a, b int) int {
 
 func clamp(a, minVal, maxVal int) int {
 	return max(min(a, maxVal), minVal)
+}
+
+func getFileLength(filePath string) int {
+	file, _ := os.Open(filePath)
+	defer file.Close()
+	buf := make([]byte, 32*1024)
+	count := 0
+	lineSep := []byte{'\n'}
+
+	for {
+		c, err := file.Read(buf)
+		count += bytes.Count(buf[:c], lineSep)
+
+		switch {
+		case err == io.EOF:
+			return count
+
+		case err != nil:
+			os.Exit(1)
+			return count
+		}
+	}
 }
 
 func Run(day uint, part uint, filePath string) {
