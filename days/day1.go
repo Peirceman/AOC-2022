@@ -8,21 +8,6 @@ import (
 	"strconv"
 )
 
-// insert val into sorted slice
-func insert(slice []int, toInsert int) []int {
-	result := make([]int, 0, len(slice) + 1)
-
-	for i, element := range slice {
-		if element > toInsert {
-			result = append(result, toInsert)
-			return append(result, slice[i:]...)
-		}
-		result = append(result, element)
-	}
-
-	return append(result, toInsert)
-}
-
 func sum(slice []int) int {
 	var result int
 	for _, num := range slice {
@@ -33,7 +18,7 @@ func sum(slice []int) int {
 }
 
 func (d *Day) Day1Part1(filePath string) {
-	file,_ := os.Open(filePath)
+	file, _ := os.Open(filePath)
 	// close file at the end of this function
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
@@ -43,7 +28,7 @@ func (d *Day) Day1Part1(filePath string) {
 
 	currentElf := 0
 	for scanner.Scan() {
-		if (scanner.Text() == "") {
+		if scanner.Text() == "" {
 			highestCalories = max(currentElf, highestCalories)
 			currentElf = 0
 			continue
@@ -59,7 +44,7 @@ func (d *Day) Day1Part1(filePath string) {
 }
 
 func (d *Day) Day1Part2(filePath string) {
-	file,_ := os.Open(filePath)
+	file, _ := os.Open(filePath)
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
 
@@ -67,7 +52,9 @@ func (d *Day) Day1Part2(filePath string) {
 	currentElf := 0
 	for scanner.Scan() {
 		if scanner.Text() == "" {
-			topCalories = insert(topCalories, currentElf)[1:]
+			topCalories, _ =
+				insertSorted(topCalories, currentElf, intCompareFunc)
+			topCalories = topCalories[1:]
 			currentElf = 0
 			continue
 		}
@@ -75,7 +62,8 @@ func (d *Day) Day1Part2(filePath string) {
 		calories, _ := strconv.Atoi(scanner.Text())
 		currentElf += calories
 	}
-	topCalories = insert(topCalories, currentElf)[1:]
+	topCalories, _ = insertSorted(topCalories, currentElf, intCompareFunc)
+	topCalories = topCalories[1:]
 
 	fmt.Println("Top calores:", sum(topCalories))
 }

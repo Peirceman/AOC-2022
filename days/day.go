@@ -5,11 +5,11 @@ import (
 	"io"
 	"math"
 	"os"
-	"strconv"
 	"reflect"
+	"strconv"
 )
 
-type Day struct {}
+type Day struct{}
 
 var d Day = Day{}
 
@@ -51,9 +51,35 @@ func getFileLength(filePath string) int {
 	}
 }
 
+func intCompareFunc(a, b int) int {
+	if a > b {
+		return 1
+	}
+
+	if a == b {
+		return 0
+	}
+
+	return -1
+}
+
+func insertSorted[T any](slice []T, toInsert T,
+	compareFunc func(a, b T) int) ([]T, int) {
+	result := make([]T, 0, len(slice)+1)
+
+	for i, element := range slice {
+		if compareFunc(toInsert, element) < 0 {
+			return append(append(result, toInsert), slice[i:]...), i
+		}
+		result = append(result, element)
+	}
+
+	return append(result, toInsert), len(result)
+}
+
 func Run(day uint, part uint, filePath string) {
 	toCall := "Day" + strconv.FormatUint(uint64(day), 10) +
-			"Part" + strconv.FormatUint(uint64(part), 10)
+		"Part" + strconv.FormatUint(uint64(part), 10)
 	reflect.ValueOf(&d).MethodByName(toCall).
-			Call([]reflect.Value{reflect.ValueOf(filePath)})
+		Call([]reflect.Value{reflect.ValueOf(filePath)})
 }
