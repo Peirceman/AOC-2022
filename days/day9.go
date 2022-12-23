@@ -3,26 +3,38 @@ package days
 import (
 	"bufio"
 	"fmt"
-	"strconv"
 	"os"
+	"strconv"
 )
+
+func (this coordinate) moveTo(other coordinate) coordinate {
+	if this.chebyshevDistance(other) < 2 {
+		return this
+	}
+
+	result := coordinate{}
+	result.x = this.x + clamp(other.x-this.x, -1, 1)
+	result.y = this.y + clamp(other.y-this.y, -1, 1)
+
+	return result
+}
 
 func directionToInt(dir uint8) coordinate {
 	x := 0
 	y := 0
 
 	switch dir {
-		case 'U':
-			y = 1
-		case 'L':
-			x = -1
-		case 'R':
-			x = 1
-		case 'D':
-			y = -1
+	case 'U':
+		y = 1
+	case 'L':
+		x = -1
+	case 'R':
+		x = 1
+	case 'D':
+		y = -1
 	}
 
-	return coordinate { x, y }
+	return coordinate{x, y}
 }
 
 func (d *Day) Day9Part1(filePath string) {
@@ -30,8 +42,8 @@ func (d *Day) Day9Part1(filePath string) {
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
 
-	head := coordinate { 0, 0, }
-	tail := coordinate { 0, 0, }
+	head := coordinate{0, 0}
+	tail := coordinate{0, 0}
 	visited := NewSet[coordinate](tail)
 
 	for scanner.Scan() {
@@ -56,7 +68,7 @@ func (d *Day) Day9Part2(filePath string) {
 
 	rope := [10]coordinate{}
 	for i, _ := range rope {
-		rope[i] = coordinate { 0, 0 }
+		rope[i] = coordinate{0, 0}
 	}
 
 	visited := NewSet[coordinate](rope[9])
@@ -78,4 +90,3 @@ func (d *Day) Day9Part2(filePath string) {
 
 	fmt.Println(visited.Length())
 }
-

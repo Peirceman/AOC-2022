@@ -11,20 +11,10 @@ func (this coordinate) add(other coordinate) coordinate {
 	}
 }
 
-// this means that if the distance < 2, the 2 coordinates are touching
-func (this coordinate) chebyshevDistance(other coordinate) int {
-	return int(max(abs(this.x-other.x), abs(this.y-other.y)))
+func (coord coordinate) manhattanDistance(other coordinate) int {
+	return abs(coord.x-other.x) + abs(coord.y-other.y)
 }
 
-// moves 1 step to the other coordinate if the two coordinates ar to far away
-func (this coordinate) moveTo(other coordinate) coordinate {
-	if this.chebyshevDistance(other) < 2 {
-		return this
-	}
-
-	result := coordinate{}
-	result.x = this.x + clamp(other.x-this.x, -1, 1)
-	result.y = this.y + clamp(other.y-this.y, -1, 1)
-
-	return result
+func (this coordinate) chebyshevDistance(other coordinate) int {
+	return max(abs(this.x-other.x), abs(this.y-other.y))
 }

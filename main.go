@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"flag"
+	"fmt"
 	"os"
 	"strconv"
 
@@ -26,6 +26,7 @@ func main() {
 
 	if part < 1 {
 		fmt.Fprintln(os.Stderr, "please select a part")
+		os.Exit(1)
 	}
 
 	filePath := "./inputs/day" + strconv.FormatUint(uint64(day), 10)

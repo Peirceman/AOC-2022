@@ -16,8 +16,35 @@ func NewSet[T comparable](initalValues ...T) *set[T] {
 	return s
 }
 
+func (s *set[T]) Copy() *set[T] {
+	result := NewSet[T]()
+
+	for ele := range s.Itterate() {
+		result.Add(ele)
+	}
+
+	return result
+}
+
 func (s *set[T]) Add(toAdd T) {
 	s.m[toAdd] = exists
+}
+
+func (s1 *set[T]) Combine(s2 *set[T]) *set[T] {
+	if s1 == nil {
+		return s2
+	}
+
+	if s2 == nil {
+		return s1
+	}
+
+	result := s1.Copy()
+	for ele := range s2.Itterate() {
+		result.Add(ele)
+	}
+
+	return result
 }
 
 func (s *set[T]) AddSlice(toAdd []T) {
@@ -47,4 +74,18 @@ func (s *set[T]) ToSlice() []T {
 	}
 
 	return result
+}
+
+func (s *set[T]) Itterate() <-chan T {
+	channel := make(chan T)
+
+	go func() {
+		for k, _ := range s.m {
+			channel <- k
+		}
+
+		close(channel)
+	}()
+
+	return channel
 }
